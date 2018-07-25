@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link rel="shortcut icon" type="image/x-icon" href="/therealdeal.png">
+    <link rel="icon" href="favicon.ico">
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="/assets/homestyles.css">
@@ -10,19 +12,19 @@
     <div id="backgroundimage">
       <div id="buttonsbox">
         <h1 id="sitename">Pepper Blinds <h1>
-        <button type="button" class="sign" id="signin">Hello, <%=user.username%>!</button>
+        <button style="width:100px;"type="button" class="sign" id="signin">Hello, <%=user.firstname%>!</button>
       </div> <!-- TopBarStuff -->
       <br><br>
       <div id="OfferStuff">
         <div id="specialoffers">
           <h4 id="sofontstuff">Special Offers!...</h4>
-            <%for (var i = 0; i < options.length; i++) { %>
+            <%for (var i = 0; i < options.length && i<3 ; i++) { %>
           <div id="sOffers" style="background-image:url('<%=options[i].imageLink%>');">
-            <div id="sOfferInfo">
-              <h1 id="dahspecnameinf"><a href="/treatment/<%=options[i].id%>" class="gotoblindpurchase"><%=options[i].name%></a></h1>
+            <div style="background-color:rgba(0, 0, 0, 0.5);">
+              <h1  id="dahspecnameinf"><a  style="color:white;" href="/treatment/<%=options[i].id%>" class="gotoblindpurchase"><%=options[i].name%></a></h1>
                 <p id="dahspecdescinf"><%=options[i].style %>  </p>
-                <p id="dahspecdescinf"><%= options[i].ppsf%> Per Square Foot</p>
-            </div>
+                <p id="dahspecdescinf">$<%= options[i].ppsf%> Per Square Foot</p>
+              </div>
           </div>
               <% } %>
         </div>
@@ -31,12 +33,22 @@
         </div>
         <div id="moreoffers">
           <h4 id="mofontstuff">More Offers...</h4>
-          <div id="mOffers">
-            <div id="mOfferInfo">
-              <h1 id="dahmorenameinf"><a href="#" class="gotoblindpurchase">Decent Blinds</a></h1>
-                <p id="dahmoredescinf">Wow... take a look at these Blinds...</p>
-            </div>
-          </div>
+          <%for (var i = 0; i < options.length ; i++) { %>
+            <% if (i > 3) { %>
+              <div id="sOffers" style="background-image:url('<%=options[i].imageLink%>');">
+                <div style="background-color:rgba(0, 0, 0, 0.5);">
+
+
+                  <h1 id="dahmorenameinf"><a style="color:white;" href="/treatment/<%=options[i].id%>" class="gotoblindpurchase"><%=options[i].name%></a></h1>
+                  <p id="dahspecdescinf"><%=options[i].style %>  </p>
+                  <p id="dahspecdescinf"><%= options[i].ppsf%> Per Square Foot</p>
+
+                </div>
+              </div>
+           <%}%>
+
+          <% } %>
+
         </div>
       </div>
       <div id="paypalstuff">
@@ -59,7 +71,10 @@
           <h2 id="dahprofiletext">My Profile</h2>
           <hr><br>
           <div id="profilepage">
-            <button type="button" name="gotoprofile" onclick="go2profile" class="profilebtns" id="profilebtn">Profile Page</button>
+            <form class="" action="/orders" method="get">
+              <button type="submit" class="profilebtns" id="profilebtn">See Past Orders</button>
+            </form>
+
 
           </div>
           <div id="logout">

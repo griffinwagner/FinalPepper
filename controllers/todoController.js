@@ -1,8 +1,10 @@
 const express = require('express');
 const session = require('express-session');
 module.exports = function(app, db, passport) {
+
+
   // reading data
-app.get('/todo', isLoggedIn, function(req, res) {
+app.get('/', isLoggedIn, function(req, res) {
   var sessData = req.session;
   sessData.user = req.user;
   console.log(sessData.user);
@@ -10,6 +12,7 @@ app.get('/todo', isLoggedIn, function(req, res) {
   console.log(req.user);
   let sql = 'SELECT * FROM options;';
   db.query(sql, (err, results) => {
+    sessData.allOptions = results;
     if (err) throw err;
     console.log(results);
     res.render('todo', {options: results, user:req.user} );
@@ -48,7 +51,7 @@ app.get('/todo', isLoggedIn, function(req, res) {
   });
 // handling signup form
 app.post('/signup', passport.authenticate('local-signup',  {
- successRedirect: '/todo',
+ successRedirect: '/',
  failureRedirect: '/signup'}
 )
 );
@@ -67,7 +70,7 @@ db.query(sql, (err, results) => {
 // halding sign in form
 
 app.post('/signin', passport.authenticate('local-signin',  {
-  successRedirect: '/todo',
+  successRedirect: '/',
   failureRedirect: '/signin'}
  )
 );
@@ -81,16 +84,25 @@ app.get('/logout',function(req,res){
   });
 
   // display purchasepage
-
-  app.get('/ConfirmPurchase', function (req, res) {
-    res.render('purchaseTemplate');
+app.get('/ConfirmPurchase', isLoggedIn, function (req, res) {
+  var sessData = req.session;
+  sessData.user = req.user;
+  console.log(sessData.user);
+  console.log('we reading');
+  console.log(req.user);
+  let sql = 'SELECT * FROM options;';
+  db.query(sql, (err, results) => {
+    if (err) throw err;
+    console.log(results);
+    res.render('purchaseTemplate', {options: results, user:req.user} );
   });
+});
 
   app.get('/admin', function(req, res) {
   res.render('admin')
 })
 
-app.get('/treatment/:id',function(req, res) {
+app.get('/treatment/:id', isLoggedIn, function(req, res) {
     console.log('we be getting');
     var theUser = req.session.user;
 
@@ -171,6 +183,35 @@ app.get('/treatment/:id',function(req, res) {
       })
     });
 
+    app.post('/buy', function (req, res) {
+      console.log("BUYING+++++++++=====================");
+      var sessData = req.session;
+      console.log(req.body.address);
+      sessData.address = req.body.address;
+      console.log(sessData.price);
+      console.log(sessData.user);
+      console.log(sessData.option[0]);
+      console.log(sessData.contractor);
+      let sql = `INSERT INTO orders (userID, optionName, contractorName, price, address) VALUES (`+ sessData.user.id +`, "`+sessData.option[0].name+ `","`+sessData.contractor[0].name+`",`+sessData.price+`, "${req.body.address}");`;
+      console.log(sql);
+      db.query(sql, (err, result)=> {
+        console.log(sessData.allOptions);
+        console.log(result);
+
+        res.redirect('/orders')
+      })
+    })
+
+    app.get('/orders', isLoggedIn, function (req, res) {
+      var sessData = req.session;
+      sessData.user = req.user;
+      let sql = `SELECT * FROM orders WHERE userID = `+sessData.user.id + `;`;
+      db.query(sql, (err, result)=> {
+        console.log(result);
+        res.render('orderPage', {user:sessData.user, orders:result})
+
+      })
+    })
 
 
 
@@ -199,6 +240,8 @@ app.get('/treatment/:id',function(req, res) {
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
-
+        console.log("Hello Bitch");
+        var needtologin = true;
+        console.log(needtologin);
     res.redirect('/signin');
 }

@@ -28,5 +28,6 @@
   "bugs": {
     "url": "https://github.com/KalebBennett/PepperBlinds/issues"
   },
-  "homepage": "https://github.com/KalebBennett/PepperBlinds#readme"
+  "homepage": "https://github.com/KalebBennett/PepperBlinds#readme",
+  "devDependencies": {}
 }

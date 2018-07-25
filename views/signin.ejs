@@ -22,14 +22,17 @@
       <div id="OfferStuff">
         <div id="specialoffers">
           <h4 id="sofontstuff">Special Offers!...</h4>
-            <%for (var i = 0; i < options.length; i++) { %>
-          <div id="sOffers" style="background-image:url('<%=options[i].imageLink%>');">
-            <div id="sOfferInfo">
-              <h1 id="dahspecnameinf"><a href="/treatment/<%=options[i].id%>" class="gotoblindpurchase"><%=options[i].name%></a></h1>
-                <p id="dahspecdescinf"><%=options[i].style %>  </p>
-                <p id="dahspecdescinf"><%= options[i].ppsf%> Per Square Foot</p>
-            </div>
-          </div>
+            <%for (var i = 0; i < options.length ; i++) { %>
+              <% if (i < 3) { %>
+                <div id="sOffers" style="background-image:url('<%=options[i].imageLink%>');">
+                  <div id="sOfferInfo">
+                    <h1 id="dahspecnameinf"><a href="/treatment/<%=options[i].id%>" onclick="alert('You Need To Be Logged In To View This Page')"class="gotoblindpurchase"><%=options[i].name%></a></h1>
+                      <p id="dahspecdescinf"><%=options[i].style %>  </p>
+                      <p id="dahspecdescinf"><%= options[i].ppsf%> Per Square Foot</p>
+                  </div>
+                </div>
+              <% } %>
+
               <% } %>
         </div>
         <div id="bar">
@@ -37,12 +40,19 @@
         </div>
         <div id="moreoffers">
           <h4 id="mofontstuff">More Offers...</h4>
-          <div id="mOffers">
-            <div id="mOfferInfo">
-              <h1 id="dahmorenameinf"><a href="#" class="gotoblindpurchase">Decent Blinds</a></h1>
-                <p id="dahmoredescinf">Wow... take a look at these Blinds...</p>
-            </div>
-          </div>
+          <%for (var i = 0; i < options.length  ; i++) { %>
+            <% if (i > 3) { %>
+              <div id="sOffers" style="background-image:url('<%=options[i].imageLink%>');">
+                <div id="sOfferInfo">
+                  <h1 id="dahmorenameinf"><a href="/treatment/<%=options[i].id%>" class="gotoblindpurchase"><%=options[i].name%></a></h1>
+                  <p id="dahspecdescinf"><%=options[i].style %>  </p>
+                  <p id="dahspecdescinf"><%= options[i].ppsf%> Per Square Foot</p>
+                </div>
+              </div>
+           <%}%>
+
+          <% } %>
+
         </div>
       </div>
       <div id="paypalstuff">
