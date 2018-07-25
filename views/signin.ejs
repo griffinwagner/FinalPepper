@@ -22,17 +22,14 @@
       <div id="OfferStuff">
         <div id="specialoffers">
           <h4 id="sofontstuff">Special Offers!...</h4>
-            <%for (var i = 0; i < options.length ; i++) { %>
-              <% if (i < 3) { %>
-                <div id="sOffers" style="background-image:url('<%=options[i].imageLink%>');">
-                  <div id="sOfferInfo">
-                    <h1 id="dahspecnameinf"><a href="/treatment/<%=options[i].id%>" onclick="alert('You Need To Be Logged In To View This Page')"class="gotoblindpurchase"><%=options[i].name%></a></h1>
-                      <p id="dahspecdescinf"><%=options[i].style %>  </p>
-                      <p id="dahspecdescinf"><%= options[i].ppsf%> Per Square Foot</p>
-                  </div>
-                </div>
-              <% } %>
-
+            <%for (var i = 0; i < options.length && i<3 ; i++) { %>
+          <div id="sOffers" style="background-image:url('<%=options[i].imageLink%>');">
+            <div style="background-color:rgba(0, 0, 0, 0.5);">
+              <h1  id="dahspecnameinf"><a  onclick = 'alert("You Need To Be Logged In To See This Page")'style="color:white;" href="/treatment/<%=options[i].id%>" class="gotoblindpurchase"><%=options[i].name%></a></h1>
+                <p id="dahspecdescinf"><%=options[i].style %>  </p>
+                <p id="dahspecdescinf">$<%= options[i].ppsf%> Per Square Foot</p>
+              </div>
+          </div>
               <% } %>
         </div>
         <div id="bar">
@@ -40,13 +37,16 @@
         </div>
         <div id="moreoffers">
           <h4 id="mofontstuff">More Offers...</h4>
-          <%for (var i = 0; i < options.length  ; i++) { %>
+          <%for (var i = 0; i < options.length ; i++) { %>
             <% if (i > 3) { %>
               <div id="sOffers" style="background-image:url('<%=options[i].imageLink%>');">
-                <div id="sOfferInfo">
-                  <h1 id="dahmorenameinf"><a href="/treatment/<%=options[i].id%>" class="gotoblindpurchase"><%=options[i].name%></a></h1>
+                <div style="background-color:rgba(0, 0, 0, 0.5);">
+
+
+                  <h1 id="dahmorenameinf"><a onclick = 'alert("You Need To Be Logged In To See This Page")' style="color:white;" href="/treatment/<%=options[i].id%>" class="gotoblindpurchase"><%=options[i].name%></a></h1>
                   <p id="dahspecdescinf"><%=options[i].style %>  </p>
                   <p id="dahspecdescinf"><%= options[i].ppsf%> Per Square Foot</p>
+
                 </div>
               </div>
            <%}%>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div id="loginstuff">
+      <center> <div id="loginstuff">
         <h1 id="signintext">Login</h1>
         <% if(message.length>0){%>
           <div class="alert alert-danger"><%= message %></div>
@@ -87,17 +87,12 @@
           <br>
           <button type="submit" class="btn btn-warning btn-lg" id="signinbtn">Login</button>
           <br>
-          <button type="button" class="signinoption" id="facebooksignin"></button>
-          <br>
-          <button type="button" class="signinoption" id="gmailsignin"></button>
-          <br>
-          <button type="button" class="signinoption" id="twittersignin"></button>
+
         </form>
         <div class="button_slide slide_down">BUTTON: SLIDE DOWN </div>
 
         <p>Need an account? <a href="/signup">Signup</a></p>
-        <p>Or go <a href="/todo">Home</a>.</p>
-      </div>
+      </div> </center>
     </div>
   </body>
   <script src="/assets/signinhomepage.js" charset="utf-8">></script>
